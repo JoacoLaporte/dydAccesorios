@@ -1,0 +1,22 @@
+[
+    {
+      "id": 1,
+      "nombre": "Accesorio 1",
+      "precio": 10,
+      "imagen": "/../../public/icons/logoDyd.jpg",
+      "descripcion":  "Prueba hola como estas"
+    },
+    {
+      "id": 2,
+      "nombre": "Accesorio 2",
+      "precio": 11,
+      "imagen": "/productos/smartband.jpg"
+    },
+    {
+      "id": 3,
+      "nombre": "Accesorio 3",
+      "precio": 12,
+      "imagen": "/productos/funda-iphone.jpg"
+    }
+    
+  ]

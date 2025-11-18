@@ -1,0 +1,22 @@
+[
+    {
+      "id": 1,
+      "nombre": "Funda iPhone 15",
+      "precio": 1500,
+      "imagen": "/../../public/icons/logoDyd.jpg",
+      "descripcion":  "Prueba hola como estas"
+    },
+    {
+      "id": 2,
+      "nombre": "Pulsera Smartband",
+      "precio": 2000,
+      "imagen": "/productos/smartband.jpg"
+    },
+    {
+      "id": 3,
+      "nombre": "Funda iPhone 15",
+      "precio": 3000,
+      "imagen": "/productos/funda-iphone.jpg"
+    }
+    
+  ]
