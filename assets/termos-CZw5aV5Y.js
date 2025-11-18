@@ -1,0 +1,1 @@
+const o=[{id:1,nombre:"Termo Stanley 1L",precio:20,imagen:"/productos/termo.jpg"},{id:2,nombre:"Termo Lumilagro",precio:15,imagen:"/productos/lumilagro.jpg"},{id:2,nombre:"Termo prueba",precio:11,imagen:"/productos/lumilagro.jpg"}];export{o as default};

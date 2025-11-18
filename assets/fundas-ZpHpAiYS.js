@@ -1,0 +1,1 @@
+const o=[{id:1,nombre:"Funda iPhone 15",precio:1500,imagen:"/../../public/icons/logoDyd.jpg",descripcion:"Prueba hola como estas"},{id:2,nombre:"Pulsera Smartband",precio:2e3,imagen:"/productos/smartband.jpg"},{id:3,nombre:"Funda iPhone 15",precio:3e3,imagen:"/productos/funda-iphone.jpg"}];export{o as default};

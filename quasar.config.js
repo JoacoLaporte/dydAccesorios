@@ -3,22 +3,16 @@
 
 import { defineConfig } from '#q-app/wrappers'
 
-export default defineConfig((/* ctx */) => {
+export default defineConfig(() => {
   return {
-    // https://v2.quasar.dev/quasar-cli-vite/prefetch-feature
-    // preFetch: true,
-
-    // app boot file (/src/boot)
     boot: ['axios', 'pinia'],
 
-    // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#css
     css: ['app.scss'],
 
-    // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
-      'roboto-font',       // fuente base
-      'material-icons',    // íconos Material estándar
-      'mdi-v7'             // agregado: habilita Material Design Icons (mdi-whatsapp, mdi-facebook, etc.)
+      'roboto-font',
+      'material-icons',
+      'mdi-v7'
     ],
 
     build: {
@@ -28,6 +22,9 @@ export default defineConfig((/* ctx */) => {
       },
 
       vueRouterMode: 'hash',
+
+      // *** IMPORTANTE PARA GITHUB PAGES ***
+      publicPath: '/dydAccesorios/',
 
       vitePlugins: [
         [
@@ -44,14 +41,13 @@ export default defineConfig((/* ctx */) => {
     },
 
     devServer: {
-      open: true, // abre el navegador automáticamente
+      open: true,
     },
 
-    // 👇 modificación importante aquí
     framework: {
-      iconSet: 'material-icons',   // set principal de íconos de Quasar
+      iconSet: 'material-icons',
       config: {},
-      extras: ['mdi-v7'],          // asegura que mdi esté habilitado también aquí
+      extras: ['mdi-v7'],
       plugins: ['Notify']
     },
 
@@ -67,9 +63,7 @@ export default defineConfig((/* ctx */) => {
       workboxMode: 'GenerateSW',
     },
 
-    cordova: {
-      // noIosLegacyBuildFlag: true,
-    },
+    cordova: {},
 
     capacitor: {
       hideSplashscreen: true,
