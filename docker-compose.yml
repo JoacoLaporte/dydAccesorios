@@ -1,0 +1,56 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: dyd_app
+    restart: unless-stopped
+    volumes:
+      - ./backend:/var/www/html
+      - ./docker/php/php.ini:/usr/local/etc/php/conf.d/custom.ini
+    networks:
+      - dyd_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  nginx:
+    image: nginx:alpine
+    container_name: dyd_nginx
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./backend:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - dyd_network
+    depends_on:
+      - app
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: dyd_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: dydaccesorios
+      POSTGRES_USER: dyd_user
+      POSTGRES_PASSWORD: dyd_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - dyd_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dyd_user -d dydaccesorios"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+networks:
+  dyd_network:
+    driver: bridge
+
+volumes:
+  postgres_data:

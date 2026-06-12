@@ -41,14 +41,14 @@
               <!-- Imagen -->
               <div class="col-auto">
                 <q-img
-                  :src="item.imagen"
+                  :src="item.imagen ? `${apiUrl}/storage/${item.imagen}` : '/icons/logoDyd.jpg'"
                   :alt="item.nombre"
                   style="width: 80px; height: 80px; border-radius: 8px;"
                 />
               </div>
 
               <!-- Detalle del producto -->
-              <div class="col">
+              <div class="col q-pl-md">
                 <div class="text-subtitle1 text-bold">{{ item.nombre }}</div>
                 <div>
                   <q-btn
@@ -157,6 +157,7 @@
 import { useCartStore } from 'src/stores/cartStore'
 
 const cart = useCartStore()
+const apiUrl = import.meta.env.VITE_API_URL
 
 // Actualiza cantidad manualmente desde el input
 function actualizarCantidad(item) {

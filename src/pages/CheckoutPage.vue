@@ -167,12 +167,12 @@
   
   <script setup>
 import { ref } from 'vue'
-// import { useQuasar } from 'quasar'
-// import axios from 'axios'
-// import { useCartStore } from 'src/stores/cartStore'
+import { useQuasar } from 'quasar'
+import { api } from 'src/boot/axios'
+import { useCartStore } from 'src/stores/cartStore'
 
-// const $q = useQuasar()
-// const cartStore = useCartStore()
+const $q = useQuasar()
+const cartStore = useCartStore()
 const pedidoExitoso = ref(false) // estado del modal
 const sucursales = [
   'Larrea 193 - CABA'
@@ -194,34 +194,29 @@ const form = ref({
 
 // Función que se ejecuta al hacer click en “Confirmar pedido”
 async function enviarPedido() {
-  // if (!form.value.nombre || !form.value.email) {
-  //   $q.notify({ color: 'red', message: 'Completá los campos obligatorios' })
-  //   return
-  // }
+  if (!form.value.nombre || !form.value.email) {
+    $q.notify({ color: 'red', message: 'Completá los campos obligatorios' })
+    return
+  }
 
-  // try {
-  //   const formData = {
-  //     ...form.value,
-  //     carrito: cartStore.carrito,
-  //     total: cartStore.totalCarrito
-  //   }
+  try {
+    const payload = {
+      ...form.value,
+      carrito: cartStore.carrito,
+      total: cartStore.totalCarrito,
+    }
 
-  //   // Llamado al backend PHP
-  //   const res = await axios.post('http://localhost:8000/mail_pedido.php', formData)
+    const { data } = await api.post('/orders', payload)
 
-  //   if (res.data.status === 'ok') {
-  //     cartStore.vaciarCarrito()
-  //     pedidoExitoso.value = true // abre el cuadro de confirmación
-  //   } else {
-  //     $q.notify({ color: 'red', message: 'Error al enviar el pedido' })
-  //     console.error(res.data.msg)
-  //   }
-
-  // } catch (err) {
-  //   console.error(err)
-  //   $q.notify({ color: 'red', message: 'Error al conectar con el servidor' })
-  // }
-  pedidoExitoso.value = true
+    if (data.status === 'ok') {
+      cartStore.vaciarCarrito()
+      pedidoExitoso.value = true
+    }
+  } catch (err) {
+    console.error(err)
+    $q.notify({ color: 'red', message: 'Error al enviar el pedido. Intentá de nuevo.' })
+  }
+  // pedidoExitoso.value = true
   
 }
 

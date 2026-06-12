@@ -8,18 +8,22 @@
           <img src="/icons/logoDyd.jpg" alt="Logo DYD Accesorios" />
         </q-avatar>
 
-        <q-toolbar-title class="text-h6 q-ml-sm">
+        <!-- TÍTULO (solo desktop) -->
+        <q-toolbar-title class="titulo-navbar q-ml-sm">
           DyD Accesorios
         </q-toolbar-title>
       </router-link>
 
-    
       <q-space />
 
-      <!-- COTIZACION DOLAR-->
-      <div v-if="dolarBlue" class="row items-center text-caption q-mr-md">
-        <span class="cotizacion-dolar">Cotización Dolar:<q-icon name="mdi-currency-usd" color="black" size="21px"/><b>{{ dolarBlue.venta }}</b></span>
-      </div>
+      <!-- COTIZACIÓN DEL DÓLAR (solo desktop) -->
+      <!-- <div v-if="dolarBlue" class="cotizacion-wrapper">
+        <span class="cotizacion-dolar">
+          Cotización Dolar:
+          <q-icon name="mdi-currency-usd" color="black" size="21px"/>
+          <b>{{ dolarBlue.venta }}</b>
+        </span>
+      </div> -->
 
       <!-- BUSCADOR -->
       <q-input
@@ -27,8 +31,8 @@
         placeholder="Buscar productos..."
         dense
         outlined
-        class="q-mr-md bg-white"
-        style="max-width: 300px;border-radius: 7px;"
+        class="input-search bg-white"
+        style="border-radius: 7px;"
       >
         <template #append>
           <q-icon name="search" />
@@ -37,14 +41,14 @@
 
       <!-- ICONO CARRITO -->
       <q-btn flat dense round icon="shopping_cart" to="/cart">
-      <q-badge
-        v-if="cart.totalItems > 0"
-        floating
-        color="red"
-        text-color="white"
-      >
-        {{ cart.totalItems }}
-      </q-badge>
+        <q-badge
+          v-if="cart.totalItems > 0"
+          floating
+          color="red"
+          text-color="white"
+        >
+          {{ cart.totalItems }}
+        </q-badge>
       </q-btn>
 
     </q-toolbar>
@@ -80,27 +84,35 @@ watch(search, val => {
     router.push({ path: '/' })
   }
 })
-
 </script>
 
 <style scoped>
-  .navbar-gradient {
-    background: linear-gradient(
-      180deg,
-      #72b7ce 30%,
-      #9ac97a 100%
-    );
-    /* #5eb6d3a4 30%,
-      #5aa727be 100% */
+.navbar-gradient {
+  background: linear-gradient(180deg, #72b7ce 30%, #9ac97a 100%);
+}
+
+.no-decoration {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* .cotizacion-dolar {
+  font-size: 15px;
+  margin-top: 1px;
+} */
+
+.titulo-navbar{
+  display: block;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .titulo-navbar{
+    display: none !important;
   }
 
-  .no-decoration {
-    text-decoration: none;
-    color: inherit;
+  .input-search {
+    max-width: 160px !important;
   }
-
-  .cotizacion-dolar{
-    font-size: 15px;
-    margin-top: 1px
 }
 </style>

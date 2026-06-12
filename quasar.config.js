@@ -44,6 +44,7 @@ export default defineConfig((/* ctx */) => {
     },
 
     devServer: {
+      port: 9100,
       open: true, // abre el navegador automáticamente
     },
 
@@ -52,7 +53,7 @@ export default defineConfig((/* ctx */) => {
       iconSet: 'material-icons',   // set principal de íconos de Quasar
       config: {},
       extras: ['mdi-v7'],          // asegura que mdi esté habilitado también aquí
-      plugins: ['Notify']
+      plugins: ['Notify', 'Dialog']
     },
 
     animations: [],

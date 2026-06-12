@@ -16,6 +16,7 @@
         <q-tab name="accesorios" label="Accesorios" />
         <q-tab name="electronica" label="Electrónica" />
         <q-tab name="fundas" label="Fundas" />
+        <q-tab name="parlantes" label="Parlantes" />
         <q-tab name="termos" label="Termos" />
       </q-tabs>
   
@@ -34,6 +35,7 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue'
 import axios from 'axios'
+import { api } from 'src/boot/axios'
 import ProductsGrid from 'src/components/ProductsGrid.vue'
 
 const tab = ref('accesorios')
@@ -52,24 +54,17 @@ async function obtenerDolar() {
 
 async function cargarProductos(categoria) {
   try {
-    const data = await import(`../data/${categoria}.json`)
     const cotizacion = dolarBlue.value?.venta || 1
+    const { data } = await api.get('/products', { params: { categoria } })
 
-    productos.value = data.default
-      .map((p, index) => {
-        const precioConvertido =
-          categoria === 'fundas'
-            ? p.precio // precio fijo, sin dólar
-            : (p.precio * cotizacion).toFixed(0) // convertido a pesos
-
-        return {
-          ...p,
-          tipo: categoria,
-          uid: `${categoria}-${p.id || index + 1}`,
-          precioARS: precioConvertido
-        }
-      })
-      .sort((a, b) => a.nombre.localeCompare(b.nombre))
+    productos.value = data.map(p => ({
+      ...p,
+      uid: `${p.categoria}-${p.id}`,
+      tipo: p.categoria,
+      precioARS: p.moneda === 'ARS'
+        ? p.precio
+        : (p.precio * cotizacion).toFixed(0),
+    }))
   } catch (error) {
     console.error(`Error cargando productos de ${categoria}:`, error)
     productos.value = []

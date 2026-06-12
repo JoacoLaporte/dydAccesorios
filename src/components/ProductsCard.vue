@@ -3,18 +3,18 @@
   
       <!-- Imagen -->
       <q-img
-        :src="producto.imagen"
+        :src="imagenSrc"
         :alt="producto.descripcion"
-        height="180px"
+        height="350px"
         class="rounded-borders"
       />
   
       <!-- Descripción -->
       <q-card-section class="q-pa-sm text-center">
         <div class="text-caption text-grey-7">{{ producto.codigo }}</div>
-        <div class="text-subtitle1 text-weight-bold">{{ producto.descripcion }}</div>
-        <div class="text-subtitle1 q-mt-sm">{{ producto.nombre }}</div>
-        <div class="text-bold text-green">$ {{ producto.precioARS }}</div>
+        <div class="text-subtitle1 q-mt-sm nombre-card">{{ producto.nombre }}</div>
+        <div class="text-subtitle1 text-weight-bold descripcion-card">{{ producto.descripcion }}</div>
+        <div class="text-bold text-green precio-card">$ {{ producto.precioARS }}</div>
       </q-card-section>
   
       <!-- Cantidad -->
@@ -52,7 +52,7 @@
           color="black"
           icon="shopping_cart"
           label="Agregar"
-          class="full-width"
+          class="full-width btn-agregar-card"
           @click="agregarAlCarrito"
         />
       </q-card-actions>
@@ -61,7 +61,7 @@
   </template>
   
   <script setup>
-  import { ref } from 'vue'
+  import { ref, computed } from 'vue'
   import { useQuasar } from 'quasar'
   import { useCartStore } from 'src/stores/cartStore'
   
@@ -75,6 +75,11 @@
   const $q = useQuasar()
   const cart = useCartStore()
   const cantidad = ref(1)
+
+  const imagenSrc = computed(() => {
+    if (!props.producto.imagen) return '/icons/logoDyd.jpg'
+    return `${import.meta.env.VITE_API_URL}/storage/${props.producto.imagen}`
+  })
   
   function incrementarCantidad() {
     cantidad.value++
@@ -102,7 +107,7 @@
     })
   
     $q.notify({
-      message: `${props.producto.descripcion} agregado al carrito`,
+      message: `${props.producto.nombre} agregado al carrito`,
       color: 'black',
       icon: 'check',
       iconColor: 'green',
@@ -124,6 +129,26 @@
   }
   .cantidad-input input {
     text-align: center;
+  }
+
+  .nombre-card{
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  .descripcion-card{
+    font-size: 14px;
+    text-align: center;
+    align-content: center;
+    height: 80px;
+  }
+
+  .precio-card{
+    font-size: 20px;
+  }
+
+  .btn-agregar-card :hover{
+    color: #4caf50;
   }
   </style>
   
